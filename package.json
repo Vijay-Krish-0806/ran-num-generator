@@ -1,0 +1,21 @@
+{
+  "name": "ran-num-generator",
+  "version": "1.0.2",
+  "description": "A simple random number generator",
+  "main": "index.js",
+  "scripts": {
+    "release": "standard-version"
+  },
+  "author": "Vijay",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vijay-Krish-0806/ran-num-generator.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "standard-version": "^9.5.0"
+  }
+}

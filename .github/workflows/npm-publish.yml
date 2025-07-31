@@ -1,0 +1,30 @@
+name: Publish to npm
+on:
+  push:
+    branches:
+      - main # Adjust to your default branch
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required for git push
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed for proper version bumping
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use your preferred Node.js version
+          registry-url: 'https://registry.npmjs.org/'
+      - run: npm ci # Use npm ci for cleaner installs in CI
+      - name: Bump version
+        run: npm version patch --no-git-tag-version # Updates package.json version
+      - run: git config user.name "GitHub Actions"
+      - run: git config user.email "actions@github.com"
+      - run: git commit -am "bump:version $(npm pkg get version | tr -d '\"')"
+      - run: git push
+      - run: git tag v$(npm pkg get version | tr -d '\"')
+      - run: git push --tags
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
